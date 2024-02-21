@@ -1,44 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-<div class="container">
-    <div class="w-100">
-            <style>
-                h1 {text-align: center;}
-            </style>
+{% block title %}Home{% endblock %}
 
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title">Login</h5>
-            </div>
-            <div class="card-body">
-                <form action="/loginAuth" method="POST">
-                    <div class="form-group">
-                        <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                    {% if error %}
-                        <br/>
-                        <br/>
-                        <div class="alert alert-danger" role="alert"><strong>Error:</strong> {{error}}</div>
-                    {% endif %}
-                
-                <a href="register">Register</a>
-                </form>
-            </div>
-        </div>
-</div>
-
-</body>
-</html>
+{% block content %}
+{% if user.is_authenticated %}
+Hi {{ user.username }}!
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Log Out</button>
+</form>
+{% else %}
+<p>You are not logged in</p>
+<a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}
