@@ -27,6 +27,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CORS_AllOWED_ORIGINS = [
+    'https://localhost:3000',
+    'https://127.0.0.1:3000',
+]
+
 
 # Application definition
 
@@ -40,6 +45,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "TaskManager",
+    'user_api.apps.UserApiConfig',
 ]
 
 MIDDLEWARE = [

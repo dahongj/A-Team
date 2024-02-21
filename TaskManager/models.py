@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from hashlib import sha3_256 as sha
 
 # How are these GPT generated models LMAO
 class User(models.Model):
@@ -46,3 +49,17 @@ class Admin(models.Model):
     password = models.CharField(max_length=50)
     branch = models.CharField(max_length=50)
 
+class AppUserManager(BaseUserManager):
+    def create_user(self, email, password, last_name, first_name):
+        if not email:
+            raise ValueError('Email required')
+        if not password:
+            raise ValueError('Password required')
+        email = self.normalize_email(email)
+        user = self.model(email = email, last_name = last_name, first_name = first_name)
+        user.set_password(sha(password))
+        user.save()
+        return user
+
+    
+        
