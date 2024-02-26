@@ -11,12 +11,12 @@ class AppUserManager(BaseUserManager):
             raise ValueError('Password required')
         email = self.normalize_email(email)
         user = self.model(email = email, last_name = last_name, first_name = first_name)
-        user.set_password(sha(password))
+        user.set_password(password)
         user.save()
         return user
     
 class User(AbstractBaseUser,PermissionsMixin):
-    email = models.EmailField(max_length=50, primary_key=True)
+    email = models.EmailField(max_length=50,unique=True,primary_key=True)
     last_name = models.CharField(max_length=50)
     first_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50, unique=True)
