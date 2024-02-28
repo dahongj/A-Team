@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser
 from hashlib import sha3_256 as sha
 
 class AppUserManager(BaseUserManager):
@@ -15,12 +15,14 @@ class AppUserManager(BaseUserManager):
         user.save()
         return user
     
-class User(AbstractBaseUser,PermissionsMixin):
+class User(AbstractBaseUser):
     email = models.EmailField(max_length=50,unique=True,primary_key=True)
     last_name = models.CharField(max_length=50)
     first_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50, unique=True)
-    password = models.CharField(max_length=32)
+    password = models.CharField(max_length=256)
+    last_login = models.DateTimeField(null=True, blank=True)
+    
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
     objects = AppUserManager()
