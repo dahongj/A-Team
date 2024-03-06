@@ -12,7 +12,13 @@ def hello(request):
     return Response({'message': 'i think i understood this'})
 
 def home(request):
-    return render(request, 'home.html')
+    cursor = connection.cursor()
+    query = 'SELECT * FROM taskmanager_user'
+    cursor.execute(query)
+    people = cursor.fetchall()
+
+    return render(request, 'home.html',{"people":people})
 
 def register(request):
     return render(request, 'register.html')
+

@@ -4,13 +4,20 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-Hi {{ user.username }}!
-<form action="{% url 'logout' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Log Out</button>
-</form>
+    Hi {{ user.username }}!
+        {%for p in people%}
+            Hey {{p.email}}
+        {%endfor%}
+        <button type="submit">Log Out</button>
 {% else %}
-<p>You are not logged in</p>
-<a href="{% url 'login' %}">Log In</a>
+    <p>You are not logged in</p>
+    <a href="{% url 'login' %}">Log In</a>
 {% endif %}
+
+{%if people %}
+    {%for p in people%}
+        Hey {{p.email}}
+    {%endfor%}
+{%endif%}
+
 {% endblock %}
