@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Show Tasks</h1>
+    <div class="row">
+        {% for task in tasks %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Task ID: {{ task.id }}</h5>
+                    <p class="card-text">Assign Date: {{ task.task_Assign_Date|date:"F d, Y" }}</p>
+                    
+                    <div style="
+                            overflow: hidden;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 3;
+                            -webkit-box-orient: vertical;" onmouseover="this.style.webkitLineClamp='initial';"onmouseout="this.style.webkitLineClamp='3';">
+                        <p class="card-text">Description: {{ task.taskDescription }}</p>
+                    </div>
+
+                    <div 
+                    style="
+                    height: 80px;"
+                    onmouseover="this.style.height='auto';"
+                    onmouseout="this.style.height='80px';">
+                        <p class="card-text mt-3">Category:
+                            {% for category in task.taskcategory_set.all %}
+                            {{ category.categoryName }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                    </div>
+                    {% if not task.is_completed %}
+                    <a href="{% url 'edit_task' task.id %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">Delete</a>
+                    {% else %}
+                    <button type="button" class="btn btn-success" disabled>Completed</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

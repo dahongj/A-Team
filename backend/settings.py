@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Build paths inside the project like this: BASE_DIR / 'subdir'.w1
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -40,7 +40,15 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "TaskManager",
+    "tasks",
+    "categories",
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -58,8 +66,7 @@ ROOT_URLCONF = "backend.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates']
-        ,
+        "DIRS": ['templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -81,9 +88,9 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'A_Team_DB',
+        'NAME': 'ATeam',
         'USER': 'root',
-        'PASSWORD': 'abc123',
+        'PASSWORD': 'Ashna20003',
         'HOST':'localhost',
         'PORT':'3306',
     }
