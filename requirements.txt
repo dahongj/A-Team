@@ -21,7 +21,6 @@ six==1.16.0
 sqlparse==0.4.4
 typing_extensions==4.9.0
 zipp==3.17.0
-asgiref
 certifi
 cffi
 charset-normalizer
@@ -30,7 +29,6 @@ cryptography
 defusedxml
 distlib
 dj-database-url
-Django
 django-crispy-forms
 django-environ
 django-registration-redux
@@ -41,10 +39,8 @@ idna
 MarkupSafe
 MouseInfo
 mss
-numpy
 oauthlib
 opencv-contrib-python
-Pillow
 pipenv
 platformdirs
 PyAutoGUI
@@ -61,7 +57,5 @@ pytweening
 requests
 requests-oauthlib
 social-auth-core
-sqlparse
-typing_extensions
 tzdata
 urllib3
