@@ -1,16 +1,16 @@
 from django.db import models
+from datetime import date
 
 # Create your models here.
 
 
 class TaskModel(models.Model):
-    task_id = models.AutoField(primary_key=True)
     taskTitle = models.CharField(max_length=255)
-    taskDescription = models.TextField()
+    taskDescription = models.TextField(null = True)
     is_completed = models.BooleanField(default=False)
-    task_Assign_Date = models.DateField()
+    task_Assign_Date = models.DateField(default = date.today)
     
-    #deadline = models.DateField()
+    deadline = models.DateField(null = True)
     importance = models.IntegerField(default = 0)
     #user = models.ForeignKey(User, on_delete=models.CASCADE)
 
