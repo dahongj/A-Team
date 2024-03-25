@@ -5,8 +5,9 @@ from . import models
 
 
 def task_list(request):
-    tasks = models.TaskModel.objects.all()
+    tasks = models.TaskModel.objects.all().order_by('importance').values
     print(tasks)
+
     return render(request, 'task_list.html', {'tasks': tasks})
 
 def add_task(request):
