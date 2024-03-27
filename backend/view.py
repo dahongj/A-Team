@@ -33,7 +33,10 @@ class UserLogin(APIView):
         if serializer.is_valid(raise_exception=True):
             user = serializer.check_user(data)
             login(request,user)
+            request.session["user_email"] = user.get_email()
+            #return Response("Found email: {}".format(request.session["user_email"]), status=status.HTTP_200_OK)
             return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response("Your username and password didn't match.",status=status.HTTP_400_BAD_REQUEST)
         
         
 class UserLogout(APIView):

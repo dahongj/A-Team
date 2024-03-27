@@ -37,6 +37,9 @@ class User(AbstractBaseUser):
     objects = AppUserManager()
     def __str__(self):
         return self.username
+    
+    def get_email(self):
+        return self.email
 
 class Tasks(models.Model):
     task_id = models.AutoField(primary_key=True)
