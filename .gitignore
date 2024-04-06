@@ -14,3 +14,6 @@ parts
 src/*.egg-info
 lib
 lib64
+node_modules/
+package-lock.json
+package.json
