@@ -138,3 +138,5 @@ LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "todolist" 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+AUTH_USER_MODEL = "login.CustomUser"
