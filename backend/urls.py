@@ -23,5 +23,5 @@ urlpatterns = [
         path('',todolist_views.index, name='index'),
         path('todo/',include('todo.urls')),
         path('account/',include('login.urls')),
-
+        path('shop/', include('shop.urls'))
 ]
