@@ -5,13 +5,14 @@
 {% endblock title %}
 
 {% block content %}
-<div class="container">
-	<div class="row mt-5">
-		<div class="col-md-10 offset-md-1">
-			<center><p class="h1 text-primary">Quick and Easy to use, Anytime, Anywhere!</p></center>
-			<center><p class="h2 mt-3">"Plan Your Day better, Get Your Life Organized"</p></center>
-			<center><p class="h5">A-Team Lets You Keep Track of Your Task in One Place.</p></center>
-		</div>
-</div>
-</div>
+    <div class="container">
+        {% for item in items %}
+        <div>
+                <h6><strong>{{item.name}}</strong></h6>
+                <h6>{{item.description}}</h6>
+                <h6><strong>{{item.price}}</strong></h6>
+                <button>Add to Cart</button>
+        </div>
+        {% endfor %}
+    </div>
 {% endblock content %}
