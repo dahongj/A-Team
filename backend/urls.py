@@ -17,11 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from todo import views as todolist_views
+from shop import views as shop_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
         path('',todolist_views.index, name='index'),
         path('todo/',include('todo.urls')),
         path('account/',include('login.urls')),
-        path('shop/', include('shop.urls'))
+        path('shop/', shop_views.index, name='shop')
 ]

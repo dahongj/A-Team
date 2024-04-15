@@ -9,4 +9,5 @@ from django.shortcuts import redirect, render, get_object_or_404
 
 @login_required
 def index(request):
-    return HttpResponse("shop")
+	context = { 'shop_text':"Welcome shop Page."}
+	return render(request, 'shop.html', context)
