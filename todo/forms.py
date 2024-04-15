@@ -7,10 +7,10 @@ from django.utils import timezone
 class TaskForm(forms.ModelForm):
 	class Meta:
 		model = TaskList
-		fields = ['task','taskDescription','importance','deadline']
+		fields = ['task','taskDescription','importance', 'points','deadline']
 		widgets = {
             'task_Assign_Date': forms.DateInput(attrs={'type': 'date'}),
-            'deadline': forms.DateInput(attrs={'type': 'date'}),
+            'deadline': forms.DateInput(attrs={'type': 'date'}),	
         }
 	def clean(self):
 		cleaned_data = super().clean()

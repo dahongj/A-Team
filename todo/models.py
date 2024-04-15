@@ -13,6 +13,7 @@ class TaskList(models.Model):
 	task_Assign_Date = models.DateField(default = date.today)
 	deadline = models.DateField(null = True)
 	importance = models.IntegerField(default = 0)
+	points = models.IntegerField(default = 0)
 
 	def __str__(self):
 		return self.task + "-" + str(self.done)
