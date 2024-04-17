@@ -65,6 +65,9 @@ def complete_task(request, task_id):
 	task = TaskList.objects.get(pk=task_id)
 	if task.manage == request.user:
 		task.done = True
+		request.user.points = request.user.points + task.points
+		print(request.user.points)
+		request.user.save()
 		task.save()
 	else:
 		messages.error(request,("Access Restricted,you are not allowed."))
@@ -90,4 +93,5 @@ def completed(request):
 		return render(request,'completed.html',{'all_tasks' : all_tasks})
 
 def profile(request):
-	return render(request,'profile.html')
+	context = {'points': request.user.points}
+	return render(request,'profile.html', context)
