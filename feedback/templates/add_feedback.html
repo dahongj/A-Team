@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{%if request.user.is_superuser%}
+    {% if feedback %}
+        {% for fd in feedback %}
+        <tr class="row">
+            <td class="col-5">{{ fd.review }}</td>
+        </tr>
+        {% endfor %}
+    {% endif %}
+{%else%}
+    <form style="width: 50%; margin: auto;" method="post" action="{% url 'add_feedback' %}">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <input type="submit" value="Submit">
+</form>
+{%endif%}
+{% endblock content %}
