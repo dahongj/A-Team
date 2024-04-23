@@ -40,9 +40,15 @@
 {% block content %}
 
 <div class="main">
+	{% if alert_message %}
+    <div class="alert alert-danger" role="alert">
+        {{ alert_message }}
+    </div>
+    {% endif %}
+
 	<div class="w-100 top-div d-flex flex-column justify-content-end">
-		<h3>Welcome to A-Teams, {{user.first_name}}</h3>
-	</div>
+        <h3>Welcome to A-Teams, {{user.first_name}}</h3>
+    </div>
 
 	<div class="row p-3 mt-3">
 		<div class="col-md-4">
@@ -122,4 +128,6 @@
 
 	</div>
 </div>
+
 {% endblock content %}
+

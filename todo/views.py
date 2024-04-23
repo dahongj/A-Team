@@ -6,13 +6,25 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
+from django.utils import timezone
+from celery import shared_task
+
 
 @login_required	
 def index(request):
 	all_tasks = TaskList.objects.filter(manage=request.user, done=0)
 	imp_tasks = TaskList.objects.filter(manage=request.user).order_by('importance')
 	com_tasks = TaskList.objects.filter(manage=request.user, done = 1)
-	context = { 'index_text':"Welcome Index Page.", 'all_tasks': all_tasks, 'imp_tasks': imp_tasks, 'com_tasks': com_tasks}
+
+	now = timezone.now()
+	alert_message = ""
+	for task in all_tasks:
+		remaining_time = task.deadline - now.date()
+		if remaining_time.days <= 1:
+			alert_message = "Some tasks have a deadline less than a day!"
+			break
+
+	context = { 'index_text':"Welcome Index Page.", 'all_tasks': all_tasks, 'imp_tasks': imp_tasks, 'com_tasks': com_tasks, 'alert_message': alert_message}
 	return render(request, 'index.html', context)
 
 @login_required
@@ -52,7 +64,15 @@ def todolist(request):
 		todo_tasks = TaskList.objects.filter(manage=request.user, done=0)
 		completed_tasks = TaskList.objects.filter(manage=request.user, done = 1)
 
-		priority_tasks = TaskList.objects.filter(manage=request.user, done=0, importance__lt=5)
+		priority_tasks = TaskList.objects.filter(manage=request.user, done=0, importance__lt=10)
+
+		for task in priority_tasks:
+			if 0 <= task.importance <= 2:
+				task.color = 'red'
+			elif 3 <= task.importance <= 6:
+				task.color = 'yellow'
+			elif 7 <= task.importance <= 10:
+				task.color = 'green'
 
 		return render(request, 'todolist.html', {'all_tasks': all_tasks, 'selected_filter': filter, 'todo_tasks': todo_tasks, 'completed_tasks': completed_tasks, 'priority_tasks': priority_tasks})
 
@@ -101,6 +121,10 @@ def complete_task(request, task_id):
 		messages.error(request,("Access Restricted,you are not allowed."))
 	return redirect('todolist')
 
+@login_required		
+def shop(request):
+	return render(request, 'shop.html')
+
 @login_required	
 def pending_task(request, task_id):
 	task = TaskList.objects.get(pk=task_id)
@@ -118,3 +142,19 @@ def completed(request):
 
 def profile(request):
 	return render(request,'profile.html')
+
+@shared_task
+def update_task_priorities(request):
+    todo_tasks = TaskList.objects.filter(manage=request.user, done=0)
+
+    now = timezone.now()
+
+    for task in todo_tasks:
+        remaining_time = task.deadline - now.date()
+
+        if remaining_time.days <= 3:
+            task.importance = max(task.importance - 1, 1)
+        else:
+            pass
+
+        task.save()
