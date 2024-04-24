@@ -2,6 +2,238 @@
 
 {% block title %}
 <title>Todo List Manage -  A-Team skt</title>
+
+<style>
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+:focus {
+    outline-color: #fa0;
+}
+
+/* Lists */
+
+.lists-container::-webkit-scrollbar {
+    height: 2.4rem;
+}
+
+
+.lists-container {
+    display: flex;
+    align-items: start;
+    padding: 0 0.8rem 0.8rem;
+    overflow-x: auto;
+    height: calc(100vh - 8.6rem);
+}
+
+.list {
+    flex: 0 0 27rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #e2e4e6;
+    max-height: calc(100vh - 11.8rem);
+    border-radius: 0.3rem;
+    margin-right: 1rem;
+}
+
+.list:last-of-type {
+    margin-right: 0;
+}
+
+.list-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #333;
+    padding: 1rem;
+}
+
+.list-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-content: start;
+    padding: 0 0.6rem 0.5rem;
+    overflow-y: auto;
+}
+
+.list-items::-webkit-scrollbar {
+    width: 1.6rem;
+}
+
+.list-items::-webkit-scrollbar-thumb {
+    background-color: #c4c9cc;
+    border-right: 0.6rem solid #e2e4e6;
+}
+
+.list-items li {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.3;
+    background-color: #fff;
+    padding: 0.65rem 0.6rem;
+    color: #4d4d4d;
+    border-bottom: 0.1rem solid #ccc;
+    border-radius: 0.3rem;
+    margin-bottom: 0.6rem;
+    word-wrap: break-word;
+    cursor: pointer;
+}
+
+.list-items li:last-of-type {
+    margin-bottom: 0;
+}
+
+.list-items li:hover {
+    background-color: #eee;
+}
+
+.add-card-btn {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #838c91;
+    padding: 1rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.add-card-btn:hover {
+    background-color: #cdd2d4;
+    color: #4d4d4d;
+    text-decoration: underline;
+}
+
+.add-list-btn {
+    flex: 0 0 27rem;
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 400;
+    background-color: #006aa7;
+    color: #a5cae0;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    transition: background-color 150ms;
+    text-align: left;
+}
+
+.add-list-btn:hover {
+    background-color: #005485;
+}
+
+.add-card-btn::after,
+.add-list-btn::after {
+    content: '...';
+}
+
+/*
+
+The following rule will only run if your browser supports CSS grid.
+
+Remove or comment-out the code block below to see how the browser will fall-back to flexbox styling. 
+
+*/
+
+@supports (display: grid) {
+    body {
+        display: grid;
+        grid-template-rows: 4rem 3rem auto;
+        grid-row-gap: 0.8rem;
+    }
+
+    .masthead {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        grid-column-gap: 2rem;
+    }
+
+    .boards-menu {
+        display: grid;
+        grid-template-columns: 9rem 18rem;
+        grid-column-gap: 0.8rem;
+    }
+
+    .user-settings {
+        display: grid;
+        grid-template-columns: repeat(4, auto);
+        grid-column-gap: 0.8rem;
+    }
+
+    .board-controls {
+        display: grid;
+        grid-auto-flow: column;
+        grid-column-gap: 1rem;
+    }
+
+    .lists-container {
+        display: grid;
+        grid-auto-columns: 22rem;
+        grid-auto-flow: column;
+        grid-column-gap: 1rem;
+    }
+
+    .list {
+        display: grid;
+        grid-template-rows: auto minmax(auto, 1fr) auto;
+    }
+
+    .list-items {
+        display: grid;
+        grid-row-gap: 0.4rem;
+    }
+
+    .logo,
+    .list,
+    .list-items li,
+    .boards-btn,
+    .board-info-bar,
+    .board-controls .btn,
+    .user-settings-btn {
+        margin: 0;
+    }
+}
+
+	.main {
+		padding: 20px;
+	}
+
+	.top-div {
+		height: 200px; 
+		background-image: linear-gradient(93deg, #650aff, #3068ff);
+		border-radius: 10px;
+		color: white;
+		padding: 20px;
+		font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	}
+
+	.my-todo {
+		background-color: white;
+		border-radius: 10px;
+		border: 1px solid #650aff;
+	}
+
+	th, td {
+		padding-right: 20px;
+		padding-left: 20px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	.thead-dark {
+		background-image: linear-gradient(93deg, #650aff, #3068ff);
+		color: white;
+	}
+
+  ul {
+    list-style-type: none;
+}
+
+</style>
 {% endblock title %}
 
 {% block content %}
@@ -9,56 +241,104 @@
 </br>
 {% if messages %}
 	{% for message in messages %}
-		<div class="alert alert-info alert-dismissible fade show" role="alert">
+		<div class="alert">
 			{{ message }}
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
+			<span button type ="button" class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+			<!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
 			</button>
 		</div>
 	{% endfor %}
 {% endif %}
-	<label class="col-lg-4"></label>
-	<a class="button" aria-current="page" href="{% url 'add_task' %}">Add task</a>
+
+<p align="center">
+	<a class="btn btn-info btn-lg mt-3 px-4 rounded-pill float-end" href="{% url 'add_task' %}">
+  <i class="bi bi-plus-lg"></i> Add Task
+	</a>
+</p>
+
 <br>
-<table class="table table-bordered text-center">
-  <thead class="thead-dark">
-    <tr class="row">
-      <th class="col-6">Task</th>
-	  <th class="col-2">Deadline</th>
-      <th class="col-2">Done</th>
-      <th class="col-1">Edit</th>
-      <th class="col-1">Delete</th>
-    </tr>
-  </thead>
-  <tbody>
-{% if all_tasks %} 
-	{% for obj in all_tasks %}
-	   {% if not obj.done %}
-			<tr class="row">
-				<td class="col-6">{{ obj.task }}</td>
-				<td class="col-2">{{ obj.deadline }}</td>
-				<td class="col-2"><a href="{% url 'complete_task' obj.id %}"><button type="button" class="btn btn-dark">Mark this completed</button></a></td>
-				<td class="col-1"><a href="{% url 'edit_task' obj.id %}"><button type="button" class="btn btn-warning">Edit</button></a></td>
-				<td class="col-1"><a href="{% url 'delete_task' obj.id %}"><button type="button" class="btn btn-danger">Delete</button></td>
-			</tr>
-		{% endif %}
-	{% endfor %}
-{% endif %}
-  </tbody>
-</table>
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-end">
-    <li class="page-item"><a class="page-link" href="?pg=1"><<</a></li>
-	{%if all_tasks.has_previous %}
-		<li class="page-item"><a class="page-link" href="?pg={{ all_tasks.previous_page_number }}">{{ all_tasks.previous_page_number }}</a></li>
-    {% endif %}
-	<li class="page-item"><a class="page-link" href="?pg={{ all_tasks.number }}">{{ all_tasks.number }}</a></li>
-	{%if all_tasks.has_next %}
-		<li class="page-item"><a class="page-link" href="?pg={{ all_tasks.next_page_number }}">{{ all_tasks.next_page_number }}</a></li>
-    {% endif %}
-	<li class="page-item"><a class="page-link" href="?pg={{ all_tasks.paginator.num_pages }}">>></a></li>
-  </ul>
-</nav>
-</div>
+
+<section class="lists-container">
+
+  <div class="list">
+
+		<h3 class="list-title">Priority Tasks</h3>
+
+		<ul class="list-items">
+			{% for obj in priority_tasks %}
+      <div class="d-flex flex-row align-items-center">
+        <li style="background-color:           
+        {% if obj.color == 'red' %}
+        red;
+        {% elif obj.color == 'yellow' %}
+        yellow;
+        {% elif obj.color == 'green' %}
+        lightgreen;
+        {% endif %};">{{obj.task}}</li>
+        <a href="{% url 'complete_task' obj.id %}">
+          <button type="button" class="btn btn-dark ml-2">Mark Completed</button>
+        </a>
+        <a href="{% url 'edit_task' obj.id %}">
+          <button type="button" class="btn btn-warning ml-2">Edit</button>
+        </a>
+        <a href="{% url 'delete_task' obj.id %}">
+          <button type="button" class="btn btn-danger ml-2">Delete</button>
+        </a>
+      </div>
+      {% endfor %}
+		</ul>
+
+
+	</div>
+
+	<div class="list">
+
+		<h3 class="list-title">Tasks to Do</h3>
+
+		<ul class="list-items">
+      {% for obj in todo_tasks %}
+      <div class="d-flex flex-row align-items-center">
+        <li>{{obj.task}}</li>
+        <a href="{% url 'complete_task' obj.id %}">
+          <button type="button" class="btn btn-dark ml-2">Mark Completed</button>
+        </a>
+        <a href="{% url 'edit_task' obj.id %}">
+          <button type="button" class="btn btn-warning ml-2">Edit</button>
+        </a>
+        <a href="{% url 'delete_task' obj.id %}">
+          <button type="button" class="btn btn-danger ml-2">Delete</button>
+        </a>
+      </div>
+      {% endfor %}
+		</ul>
+
+		<!-- <button class="add-card-btn btn">Add a card</button> -->
+
+	</div>
+
+	<div class="list">
+
+		<h3 class="list-title">Completed Tasks</h3>
+
+		<ul class="list-items">
+			{% for obj in completed_tasks %}
+      <div class="d-flex flex-row align-items-center justify-content-center">
+        <li style="min-width: 140px;">{{obj.task}}</li>
+        <a href="{% url 'pending_task' obj.id %}">
+          <button type="button" class="btn btn-dark ml-2">Mark Pending</button>
+        </a>
+        <a href="{% url 'pending_task' obj.id %}">
+          <button type="button" class="btn btn-light ml-2">Repeat</button>
+        </a>
+      </div>
+      {% endfor %}
+		</ul>
+
+
+	</div>
+
+
+</section>
+
+
 {% endblock content %}
-a1

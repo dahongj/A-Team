@@ -47,8 +47,9 @@ INSTALLED_APPS = [
     'login',
     'todo',
     'shop',
-	'crispy_forms',
+	  'crispy_forms',
     'crispy_bootstrap4',
+    'lockdown',
 ]
 
 MIDDLEWARE = [
@@ -92,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ateam',
         'USER': 'root',
-        'PASSWORD': 'ateam123',
+        'PASSWORD': 'Ashna20003',
         'HOST':'localhost',
         'PORT':'3306',
     }
@@ -133,7 +134,6 @@ STATICFILES_DIRS = [(os.path.join(BASE_DIR, 'static')),]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 MEDIA_URL = '/images/'
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

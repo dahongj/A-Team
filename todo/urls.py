@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from todo import views
 
 urlpatterns = [
@@ -10,4 +10,6 @@ urlpatterns = [
     path('complete/<task_id>',views.complete_task, name= 'complete_task'),
     path('pending/<task_id>',views.pending_task, name='pending_task'),
     path('profile',views.profile, name='profile'),
+    path('shop',views.shop, name='shop'),
+    path('lockdown/', include(('lockdown.urls','lockdown'), namespace='lockdown')),
 ]

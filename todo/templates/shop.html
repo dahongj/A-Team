@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+<title>Shop</title>
+
+<style>
+	.main {
+		padding: 20px;
+	}
+
+	.top-div {
+		height: 200px; 
+		background-image: linear-gradient(93deg, #650aff, #3068ff);
+		border-radius: 10px;
+		color: white;
+		padding: 20px;
+		font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	}
+
+	.my-todo {
+		background-color: white;
+		border-radius: 10px;
+		border: 1px solid #650aff;
+	}
+
+	th, td {
+		padding-right: 20px;
+		padding-left: 20px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	.thead-dark {
+		background-image: linear-gradient(93deg, #650aff, #3068ff);
+		color: white;
+	}
+</style>
+{% endblock title %}
+
+{% block content %}
+
+<div class="main">
+    <div>
+        <div class="row p-3 mt-3">
+            <div class="col-md-3">
+                <div class="d-flex justify-content-center align-items-center mb-3">
+                    <h4>Fitness</h4>
+                </div>
+                <div class="my-todo d-flex flex-column justify-content-center align-items-center p-3 mb-3">
+                    <h6>Take a run</h6>
+                    <br>
+                    <button style="border: 1px solid #650aff;" class="btn"><a style="text-decoration: none;" href="{% url 'add_task' %}?task_name=Take a run&category=Fitness">Add to To-Do</a></button>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="d-flex justify-content-center align-items-center mb-3">
+                    <h4>Nutrition</h4>
+                </div>
+                <div class="my-todo d-flex flex-column justify-content-center align-items-center p-3 mb-3">
+                    <h6>Eat broccoli today</h6>
+                    <br>
+                    <button style="border: 1px solid #650aff;" class="btn"><a style="text-decoration: none;" href="{% url 'add_task' %}?task_name=Eat broccoli today&category=Nutrition">Add to To-Do</a></button>
+                </div>
+                <div class="my-todo d-flex flex-column justify-content-center align-items-center p-3 mb-3">
+                    <h6>Eat 20g of protein daily</h6><br>
+                    <button style="border: 1px solid #650aff;" class="btn"><a style="text-decoration: none;" href="{% url 'add_task' %}?task_name=Eat 20g of protein daily&category=Nutrition">Add to To-Do</a></button>
+                </div>
+                <div class="my-todo d-flex flex-column justify-content-center align-items-center p-3 mb-3">
+                    <h6>No Sugar today</h6><br>
+                    <button style="border: 1px solid #650aff;" class="btn"><a style="text-decoration: none;" href="{% url 'add_task' %}?task_name=>No Sugar today&category=Nutrition">Add to To-Do</a></button>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="d-flex justify-content-center align-items-center mb-3">
+                    <h4>College</h4>
+                </div>
+                <div class="my-todo d-flex flex-column justify-content-center align-items-center p-3 mb-3">
+                    <h6>Finish Senior Design SDD document</h6><br>
+                    <button style="border: 1px solid #650aff;" class="btn"><a style="text-decoration: none;" href="{% url 'add_task' %}?task_name=Finish Senior Design SDD document&category=College">Add to To-Do</a></button>
+                </div>
+                <div class="my-todo d-flex flex-column justify-content-center align-items-center p-3 mb-3">
+                    <h6>Ask for extra extra credit form Professor John Sterling</h6><br>
+                    <button style="border: 1px solid #650aff;" class="btn"><a style="text-decoration: none;" href="{% url 'add_task' %}?task_name=Ask for extra extra credit form Professor John Sterling&category=College">Add to To-Do</a></button>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="d-flex justify-content-center align-items-center mb-3">
+                    <h4>Mindfullness</h4>
+                </div>
+                <div class="my-todo d-flex flex-column justify-content-center align-items-center p-3 mb-3">
+                    <h6>Taking a nap everday</h6><br>
+                    <button style="border: 1px solid #650aff;" class="btn"><a style="text-decoration: none;" href="{% url 'add_task' %}?task_name=Taking a nap everday&category=Mindfulness">Add to To-Do</a></button>
+                </div>
+                <div class="my-todo d-flex flex-column justify-content-center align-items-center p-3 mb-3">
+                    <h6>Do Yoga once a day</h6><br>
+                    <button style="border: 1px solid #650aff;" class="btn"><a style="text-decoration: none;" href="{% url 'add_task' %}?task_name=Do Yoga once a day&category=Mindfulness">Add to To-Do</a></button>
+                </div>
+                <div class="my-todo d-flex flex-column justify-content-center align-items-center p-3 mb-3">
+                    <h6>Turn off all devices for 20 minutes</h6><br>
+                    <button style="border: 1px solid #650aff;" class="btn"><a style="text-decoration: none;" href="{% url 'add_task' %}?task_name=Turn off all devices for 20 minutes&category=Mindfulness">Add to To-Do</a></button>
+                </div>
+                <div class="my-todo d-flex flex-column justify-content-center align-items-center p-3 mb-3">
+                    <h6>Practice Tae Kyon Do for one hour</h6><br>
+                    <button style="border: 1px solid #650aff;" class="btn"><a style="text-decoration: none;" href="{% url 'add_task' %}?task_name=Practice Tae Kyon Do for one hour&category=Mindfulness">Add to To-Do</a></button>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+</div>
+{% endblock content %}
