@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Focus Page</title>
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.onkeydown = function(e) {
+            if(e.keyCode == 9) { // Tab key
+                alert("Tab switch is not allowed.");
+                return false;
+            }
+        };
+
+        // Detect visibility change (for tab switching)
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                alert('Tab switching is detected!');
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Focus in Progress</h1>
+    <p>Do not switch tabs or open new windows.</p>
+    <form action="{% url 'lockdown:end_lockdown'%}" method="post">
+        {% csrf_token %}
+        <button type="submit">Exit Focus Mode</button>
+    </form>
+</body>
+</html>
