@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Learn the Techniques</title>
+{% endblock title %}
+
+{% block content %}
+<div class="technique-container" style="text-align: center; padding: 20px;">
+    <h1>Time Management Techniques</h1>
+    <p>Discover effective methods to manage your time and increase productivity.</p>
+    <img src="{% static 'techniques.png' %}" alt="Time Management Technique" style="max-width: 100%; height: auto;">
+</div>
+{% endblock content %}

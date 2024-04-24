@@ -93,6 +93,23 @@ This is the complete code:
   </div>
 
 </div>
+ <br>
+<br>
+
+<div>
+
+  <form style="width: 50%; margin: auto;" method="post" action="{% url 'submit_feedback' %}">
+    {% csrf_token %}
+  <h2>Share your feedback</h2>
+    <div class="form-group">
+      <label for="messageInput">Your Message</label>
+      <textarea id="messageInput" name="message" class="form-control" rows="3" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Feedback</button>
+  </form>
+</div>
+
 {% endblock content %}
 
 {% block scripts %}

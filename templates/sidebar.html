@@ -112,6 +112,22 @@
 
           <li style="height: 70px">
             <a
+              href="{% url 'techniques' %}"
+              class="sidebar"
+              style="
+                height: 70px;
+                display: flex;
+                align-items: center;
+                font-size: larger;
+              "
+            >
+              <i class="metismenu-icon fas fa-project-diagram"></i>
+              <b>Techniques</b>
+            </a>
+          </li>
+
+          <li style="height: 70px">
+            <a
               href="{% url 'profile' %}"
               class="sidebar"
               style="
@@ -121,7 +137,7 @@
                 font-size: larger;
               "
             >
-              <i class="metismenu-icon fas fa-shopping-cart"></i>
+              <i class="metismenu-icon fas fa-user"></i>
               <b>Profile</b>
             </a>
           </li>

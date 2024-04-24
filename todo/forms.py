@@ -1,5 +1,5 @@
 from django import forms
-from todo.models import TaskList
+from todo.models import TaskList, Feedback
 from datetime import date
 from django.core.exceptions import ValidationError
 from django.utils import timezone
@@ -24,9 +24,24 @@ class TaskForm(forms.ModelForm):
 	def clean(self):
 		cleaned_data = super().clean()
 		task_name = cleaned_data.get('task')
+		category = cleaned_data.get('category')
+		imp = cleaned_data.get('importance')
+		points = cleaned_data.get('points')
 		due_date = cleaned_data.get('deadline')
 
-		if TaskList.objects.filter(task=task_name, deadline=due_date).exists():
-			raise forms.ValidationError('The combination of Task and Deadline already exists.')
+		# Check if the deadline is in the past
+		if due_date and (due_date < timezone.now().date()):
+			raise forms.ValidationError({
+                'deadline': 'The deadline cannot be in the past.'
+            })
+		# Check if the task with the same name and deadline already exists
+		if TaskList.objects.filter(task=task_name, deadline=due_date, category = category, importance = imp, points = points).exists():
+			raise forms.ValidationError('This exact same task already exists!!!')
 
 		return cleaned_data
+
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ['message']
