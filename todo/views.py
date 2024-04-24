@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from todo.models import TaskList
+from login.models import CustomUser
 from todo.forms import TaskForm
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -8,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from celery import shared_task
-
+import json
 
 @login_required	
 def index(request):
@@ -63,7 +64,6 @@ def todolist(request):
 
 		todo_tasks = TaskList.objects.filter(manage=request.user, done=0)
 		completed_tasks = TaskList.objects.filter(manage=request.user, done = 1)
-
 		priority_tasks = TaskList.objects.filter(manage=request.user, done=0, importance__lt=10)
 
 		for task in priority_tasks:
@@ -79,12 +79,13 @@ def todolist(request):
 
 @login_required
 def add_task(request):
-	form = TaskForm()
+	task_name = request.GET.get('task_name', '')
+	category = request.GET.get('category', '')
+	form = TaskForm(initial={'task': task_name, 'category': category})
 	if request.method == 'POST':
 		form = TaskForm(request.POST,instance=TaskList(manage=request.user))
 		if form.is_valid():
 			form.save()
-
 			return redirect(todolist)
 	return render(request,'addtask.html',{'form': form})
 
@@ -116,6 +117,9 @@ def complete_task(request, task_id):
 	task = TaskList.objects.get(pk=task_id)
 	if task.manage == request.user:
 		task.done = True
+		user = request.user
+		user.points += task.points
+		user.save()
 		task.save()
 	else:
 		messages.error(request,("Access Restricted,you are not allowed."))
@@ -133,15 +137,32 @@ def pending_task(request, task_id):
 	return redirect('todolist')
 
 def completed(request):
-		all_tasks = TaskList.objects.filter(manage=request.user)
+		all_tasks = TaskList.objects.filter(manage=request.user, done = 0)
 		paginator = Paginator(all_tasks, 3)
 		page = request.GET.get('pg')
 		all_tasks = paginator.get_page(page) 
 		
 		return render(request,'completed.html',{'all_tasks' : all_tasks})
 
+
 def profile(request):
-	return render(request,'profile.html')
+	total_tasks = len(TaskList.objects.filter(manage=request.user))
+	completed = len(TaskList.objects.filter(manage=request.user, done = 1))
+	if total_tasks == 0:
+		total_tasks = 1
+	user = request.user
+	progress_data = {'completed': (completed/total_tasks), 'remaining': ((total_tasks-completed)/total_tasks)}
+	full_name = f"{user.first_name} {user.last_name}".strip() if user.first_name and user.last_name else ""
+
+	context = {
+        'email': user.email,
+        'name': full_name,
+        'progress_data': json.dumps(progress_data),
+		'fraction': f"{completed}/{total_tasks}",
+		'percentage': round(completed/total_tasks),
+        'total_points': user.points,
+	}
+	return render(request, 'profile.html', context)
 
 @shared_task
 def update_task_priorities(request):

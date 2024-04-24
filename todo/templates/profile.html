@@ -1,15 +1,157 @@
+This is the complete code:
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-<title>Welcome to A-Team</title>
+<title>User Profile Dashboard</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 20px;
+  }
+  .profile-container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .profile-header h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  .progress-container {
+    background-color: #e9ecef;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  .progress-bar {
+    height: 20px;
+    background-color: #4caf50;
+    border-radius: 8px;
+    width: 0%; /* Dynamically set this width based on progress */
+  }
+  .task-summary {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .chart-container {
+    position: relative;
+    margin: auto;
+    height: 500px;
+    width: 500px;
+  }
+</style>
 {% endblock title %}
 
+
 {% block content %}
-<div class="container">
-	<div class="row mt-5">
-		<div class="col-md-10 offset-md-1">
-			
-		</div>
+<div class="profile-container">
+  <div class="profile-header">
+    <h2>User's Profile</h2>
+    <div>
+      {{name}} <br>
+      {{email}}
+    </div>
+  </div>
+
+  <div class="progress-container">
+    <div class="progress-bar" style="width: 75%;">{{percentage}}}%</div>
+  </div>
+
+  <div class="task-summary">
+    <div>
+      <strong>Completed Tasks</strong>
+      <p>{{fraction}}</p>
+    </div>
+    <div>
+      <strong>Streak</strong>
+      <p>5 Days</p>
+    </div>
+    <div>
+      <strong>Points</strong>
+      <p>{{total_points}}</p>
+    </div>
+  </div>
+
+  <div class="chart-container">
+  <canvas id="progressChart"></canvas>
 </div>
+
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>Some text in the Modal..</p>
+    </div>
+  </div>
+
 </div>
 {% endblock content %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+  // Parse the progress_data JSON string to a JavaScript object
+  var progressData = JSON.parse('{{ progress_data|safe }}');
+
+  var ctx = document.getElementById('progressChart').getContext('2d');
+  var progressChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Completed', 'Remaining'],
+      datasets: [{
+        label: 'Progress',
+        data: [progressData.completed, progressData.remaining],
+        backgroundColor: [
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 99, 132, 0.2)'
+        ],
+        borderColor: [
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 99, 132, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      cutoutPercentage: 80,
+    }
+  });
+
+  // Get the modal
+  var modal = document.getElementById("myModal");
+
+  // Get the button that opens the modal
+  var btn = document.getElementById("myBtn");
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on the button, open the modal
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+});
+</script>
+
+{% endblock scripts %}
