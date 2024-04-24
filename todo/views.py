@@ -132,6 +132,9 @@ def shop(request):
 @login_required	
 def pending_task(request, task_id):
 	task = TaskList.objects.get(pk=task_id)
+	user = request.user
+	user.points -= task.points
+	user.save()
 	task.done = False
 	task.save()
 	return redirect('todolist')
