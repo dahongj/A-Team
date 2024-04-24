@@ -12,7 +12,7 @@ from .models import *
 def shop(request):
 	items = Item.objects.all()
 	context = {'items': items}
-	return render(request, 'shop.html', context)
+	return render(request, 'market.html', context)
 
 @login_required
 def buy(request, item_id):
@@ -24,12 +24,9 @@ def buy(request, item_id):
 		request.user.save()
 		context['message'] = item.name + " has been bought"
 		context['itemid'] = item_id
-		print(item_id == context['itemid'])
 		print(context['message'])
 	else:
 		context['message'] = "You don't have enough points!"
 		context['itemid'] = item_id
 		
-	
-
-	return render(request, 'shop.html', context)
+	return render(request, 'market.html', context)

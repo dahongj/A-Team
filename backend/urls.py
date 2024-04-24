@@ -23,10 +23,10 @@ from shop import views as shop_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+        path('shop/', include('shop.urls')),
         path('',todolist_views.index, name='index'),
         path('todo/',include('todo.urls')),
-        path('account/',include('login.urls')),
-        path('shop/', include('shop.urls'))
+        path('account/',include('login.urls'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
