@@ -21,7 +21,6 @@ class TaskForm(forms.ModelForm):
             'task_Assign_Date': forms.DateInput(attrs={'type': 'date'}),
             'deadline': forms.DateInput(attrs={'type': 'date'}),
         }
-
 	def clean(self):
 		cleaned_data = super().clean()
 		task_name = cleaned_data.get('task')
