@@ -16,5 +16,20 @@ def shop(request):
 
 @login_required
 def buy(request, item_id):
-	print("hi")
-	return redirect('shop')
+	item = Item.objects.get(pk=item_id)
+	items = Item.objects.all()
+	context = {'items': items}
+	if(request.user.points >= item.price):
+		request.user.points = request.user.points - item.price
+		request.user.save()
+		context['message'] = item.name + " has been bought"
+		context['itemid'] = item_id
+		print(item_id == context['itemid'])
+		print(context['message'])
+	else:
+		context['message'] = "You don't have enough points!"
+		context['itemid'] = item_id
+		
+	
+
+	return render(request, 'shop.html', context)

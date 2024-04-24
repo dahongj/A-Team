@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 from todo import views as todolist_views
 from shop import views as shop_views
 
@@ -24,5 +26,7 @@ urlpatterns = [
         path('',todolist_views.index, name='index'),
         path('todo/',include('todo.urls')),
         path('account/',include('login.urls')),
-        path('shop/', shop_views.shop, name='shop')
+        path('shop/', include('shop.urls'))
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
