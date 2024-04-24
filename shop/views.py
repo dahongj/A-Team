@@ -13,3 +13,8 @@ def shop(request):
 	items = Item.objects.all()
 	context = {'items': items}
 	return render(request, 'shop.html', context)
+
+@login_required
+def buy(request, item_id):
+	print("hi")
+	return redirect('shop')
