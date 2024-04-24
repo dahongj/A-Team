@@ -5,7 +5,7 @@ from .models import AllowlistURL
 
 class LockedBrowserMiddleware(MiddlewareMixin):
     allowed_hosts = ['https://www.w3schools.com/python/']
-    forbidden_hosts= ['https://www.youtube.com']
+    forbidden_hosts= ['https://www.youtube.com', 'https://netflix.com']
 
     def __init__(self, get_response):
         self.get_response = get_response

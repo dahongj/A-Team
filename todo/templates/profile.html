@@ -45,8 +45,8 @@ This is the complete code:
   .chart-container {
     position: relative;
     margin: auto;
-    height: 500px;
-    width: 500px;
+    height: 1000px;
+    width: 1000px;
   }
 </style>
 {% endblock title %}
@@ -63,8 +63,8 @@ This is the complete code:
   </div>
 
   <div class="progress-container">
-    <div class="progress-bar" style="width: 75%;">{{percentage}}}%</div>
-  </div>
+  <div class="progress-bar" style="width: {{ percentage }}%;">{{ percentage }}%</div>
+</div>
 
   <div class="task-summary">
     <div>
@@ -88,7 +88,7 @@ This is the complete code:
   <div id="myModal" class="modal">
     <div class="modal-content">
       <span class="close">&times;</span>
-      <p>Some text in the Modal..</p>
+      <p>%%%</p>
     </div>
   </div>
 

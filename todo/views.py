@@ -140,8 +140,7 @@ def completed(request):
 		all_tasks = TaskList.objects.filter(manage=request.user, done = 0)
 		paginator = Paginator(all_tasks, 3)
 		page = request.GET.get('pg')
-		all_tasks = paginator.get_page(page) 
-		
+		all_tasks = paginator.get_page(page)
 		return render(request,'completed.html',{'all_tasks' : all_tasks})
 
 
@@ -151,7 +150,7 @@ def profile(request):
 	if total_tasks == 0:
 		total_tasks = 1
 	user = request.user
-	progress_data = {'completed': (completed/total_tasks), 'remaining': ((total_tasks-completed)/total_tasks)}
+	progress_data = {'completed': (completed/total_tasks) * 100, 'remaining': ((total_tasks-completed)/total_tasks) * 100}
 	full_name = f"{user.first_name} {user.last_name}".strip() if user.first_name and user.last_name else ""
 
 	context = {
@@ -159,7 +158,7 @@ def profile(request):
         'name': full_name,
         'progress_data': json.dumps(progress_data),
 		'fraction': f"{completed}/{total_tasks}",
-		'percentage': round(completed/total_tasks),
+		'percentage': (completed/total_tasks) * 100,
         'total_points': user.points,
 	}
 	return render(request, 'profile.html', context)
