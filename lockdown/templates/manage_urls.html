@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage URLs</title>
+</head>
+<body>
+    <h1>Manage Allowlisted URLs</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add URL</button>
+    </form>
+    <ul>
+        {% for url in urls %}
+        <li>{{ url.url }} <a href="{% url 'delete-url' url.id %}">Delete</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
