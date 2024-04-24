@@ -13,7 +13,9 @@ class TaskList(models.Model):
         ('College', 'College'),
         ('Mindfulness', 'Mindfulness'),
     ]
+      
 
+	
 	task = models.CharField(max_length=300)
 	done = models.BooleanField(default=False)
 	taskDescription = models.TextField(null = True)
@@ -22,6 +24,19 @@ class TaskList(models.Model):
 	importance = models.IntegerField(default = 0)
 	points = models.IntegerField(default = 0)
 	category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='Fitness')
+      
+
+	choice = models.CharField(max_length=100, default='null')
+	
 
 	def __str__(self):
 		return self.task + "-" + str(self.done)
+
+
+class Feedback(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback from {self.user.email} on {self.created_at}"

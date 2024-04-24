@@ -11,5 +11,7 @@ urlpatterns = [
     path('pending/<task_id>',views.pending_task, name='pending_task'),
     path('profile',views.profile, name='profile'),
     path('shop',views.shop, name='shop'),
-    path('lockdown/', include(('lockdown.urls','lockdown'), namespace='lockdown')),
+    path('timemanagement', views.time_management, name = 'time_management'),
+    path('techniques', views.techniques, name = 'techniques'),
+    path('submit_feedback', views.submit_feedback, name = "submit_feedback")
 ]

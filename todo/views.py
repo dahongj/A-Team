@@ -1,8 +1,10 @@
+import random
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from todo.models import TaskList
+from todo.models import TaskList, Feedback
 from login.models import CustomUser
-from todo.forms import TaskForm
+from todo.forms import TaskForm, FeedbackForm
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
@@ -10,6 +12,12 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from celery import shared_task
 import json
+# from Cocoa import *
+# import objc
+import time
+import psutil
+import sys
+import os
 
 @login_required	
 def index(request):
@@ -64,9 +72,36 @@ def todolist(request):
 
 		todo_tasks = TaskList.objects.filter(manage=request.user, done=0)
 		completed_tasks = TaskList.objects.filter(manage=request.user, done = 1)
-		priority_tasks = TaskList.objects.filter(manage=request.user, done=0, importance__lt=10)
+		priority_tasks = TaskList.objects.filter(manage=request.user, done=0, importance__lt=3)
 
-		for task in priority_tasks:
+		filter_by = request.GET.get('filter_by')
+    
+		if filter_by == 'category':
+			todo_tasks = todo_tasks.order_by('category')
+		elif filter_by == 'deadline':
+			todo_tasks = todo_tasks.order_by('deadline')
+		elif filter_by == 'importance':
+			todo_tasks = todo_tasks.order_by('importance')
+
+		filter_by_completed = request.GET.get('filter_by_completed')
+    
+		if filter_by_completed == 'category':
+			completed_tasks = completed_tasks.order_by('category')
+		elif filter_by_completed == 'deadline':
+			completed_tasks = completed_tasks.order_by('deadline')
+		elif filter_by_completed == 'importance':
+			completed_tasks = completed_tasks.order_by('importance')
+
+		filter_by_priority = request.GET.get('filter_by_priority')
+    
+		if filter_by_priority == 'category':
+			priority_tasks = priority_tasks.order_by('category')
+		elif filter_by_priority == 'deadline':
+			priority_tasks = priority_tasks.order_by('deadline')
+		elif filter_by_priority == 'importance':
+			priority_tasks = priority_tasks.order_by('importance')
+
+		for task in todo_tasks:
 			if 0 <= task.importance <= 2:
 				task.color = 'red'
 			elif 3 <= task.importance <= 6:
@@ -74,7 +109,8 @@ def todolist(request):
 			elif 7 <= task.importance <= 10:
 				task.color = 'green'
 
-		return render(request, 'todolist.html', {'all_tasks': all_tasks, 'selected_filter': filter, 'todo_tasks': todo_tasks, 'completed_tasks': completed_tasks, 'priority_tasks': priority_tasks})
+		choice = request.session.get('choice', None)
+		return render(request, 'todolist.html', {'all_tasks': all_tasks, 'selected_filter': filter, 'todo_tasks': todo_tasks, 'completed_tasks': completed_tasks, 'priority_tasks': priority_tasks, 'choice': choice})
 
 
 @login_required
@@ -147,7 +183,21 @@ def completed(request):
 		return render(request,'completed.html',{'all_tasks' : all_tasks})
 
 
+
+@login_required
 def profile(request):
+	feedback_form = FeedbackForm(request.POST)
+
+	if feedback_form.is_valid():
+		feedback = feedback_form.save(commit=False)
+		feedback.user = request.user
+		feedback.save()
+		messages.success(request, 'Your feedback has been submitted.')
+		return redirect('profile')
+
+	else:
+		feedback_form = FeedbackForm()
+
 	total_tasks = len(TaskList.objects.filter(manage=request.user))
 	completed = len(TaskList.objects.filter(manage=request.user, done = 1))
 	if total_tasks == 0:
@@ -163,8 +213,21 @@ def profile(request):
 		'fraction': f"{completed}/{total_tasks}",
 		'percentage': (completed/total_tasks) * 100,
         'total_points': user.points,
+		'feedback': feedback_form
 	}
 	return render(request, 'profile.html', context)
+
+@login_required
+def submit_feedback(request):
+    if request.method == 'POST':
+        feedback_form = FeedbackForm(request.POST)
+        if feedback_form.is_valid():
+            feedback = feedback_form.save(commit=False)
+            feedback.user = request.user
+            feedback.save()
+            messages.success(request, 'Your feedback has been submitted.')
+    return redirect('profile')
+
 
 @shared_task
 def update_task_priorities(request):
@@ -181,3 +244,20 @@ def update_task_priorities(request):
             pass
 
         task.save()
+
+
+def time_management(request):
+	task_id = request.GET.get('task_id')
+	print(task_id)
+	if task_id:
+		task = TaskList.objects.get(id=task_id)
+		print(task.choice)
+		techniques = ['Pomodoro Technique', 'Eisenhower Decision Principle', 'Getting Things done', 'Diary of Success']
+		choice = random.choice(techniques)
+		task.choice = choice
+		task.save()
+	
+	return redirect('todolist')
+
+def techniques(request):
+	return render(request, 'techniques.html')

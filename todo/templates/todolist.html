@@ -258,16 +258,83 @@ Remove or comment-out the code block below to see how the browser will fall-back
 
 <br>
 
-<section class="lists-container">
+
+<section class="lists-container" style="grid-auto-columns: 35rem;">
 
   <div class="list">
 
 		<h3 class="list-title">Priority Tasks</h3>
+    <div class="d-flex justify-content-center mb-3">
+      <form method="GET" class="form-inline">
+        <div class="form-group mr-2">
+            <select name="filter_by_priority" id="filterBy" class="form-control">
+                <option value="">No Filter</option>
+                <option value="category">Category</option>
+                <option value="deadline">Deadline</option>
+                <option value="importance">Importance</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+      </form>
+    </div>
 
 		<ul class="list-items">
 			{% for obj in priority_tasks %}
-      <div class="d-flex flex-row align-items-center">
-        <li style="background-color:           
+
+      <div class="d-flex flex-row align-items-center justify-content-center">
+        <li>{{obj.task}}</li>
+        <a href="{% url 'complete_task' obj.id %}">
+          <button type="button" class="btn btn-dark ml-2">Mark Completed</button>
+        </a>
+        <a href="{% url 'edit_task' obj.id %}">
+          <button type="button" class="btn btn-warning ml-2">Edit</button>
+        </a>
+        <a href="{% url 'delete_task' obj.id %}">
+          <button type="button" class="btn btn-danger ml-2">Delete</button>
+        </a>
+
+          {% if obj.choice != "null" %}
+
+          <a href="{% url 'time_management' %}?task_id={{ obj.id }}">
+            <button type="button" class="btn btn-danger ml-2">{{obj.choice}}</button>
+          </a>
+
+          {% else %}
+          <a href="{% url 'time_management' %}?task_id={{ obj.id }}">
+            <button type="button" class="btn btn-danger ml-2">Suggestion</button>
+          </a>
+
+          {% endif %}
+
+      </div>
+
+      {% endfor %}
+		</ul>
+
+
+	</div>
+
+	<div class="list">
+
+		<h3 class="list-title">Tasks to Do</h3>
+    <div class="d-flex justify-content-center mb-3">
+      <form method="GET" class="form-inline">
+        <div class="form-group mr-2">
+            <select name="filter_by" id="filterBy" class="form-control">
+                <option value="">No Filter</option>
+                <option value="category">Category</option>
+                <option value="deadline">Deadline</option>
+                <option value="importance">Importance</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+      </form>
+    </div>
+
+		<ul class="list-items">
+      {% for obj in todo_tasks %}
+      <div class="d-flex flex-row align-items-center justify-content-center">
+        <li style="background-color:
         {% if obj.color == 'red' %}
         red;
         {% elif obj.color == 'yellow' %}
@@ -288,37 +355,24 @@ Remove or comment-out the code block below to see how the browser will fall-back
       {% endfor %}
 		</ul>
 
-
-	</div>
-
-	<div class="list">
-
-		<h3 class="list-title">Tasks to Do</h3>
-
-		<ul class="list-items">
-      {% for obj in todo_tasks %}
-      <div class="d-flex flex-row align-items-center">
-        <li>{{obj.task}}</li>
-        <a href="{% url 'complete_task' obj.id %}">
-          <button type="button" class="btn btn-dark ml-2">Mark Completed</button>
-        </a>
-        <a href="{% url 'edit_task' obj.id %}">
-          <button type="button" class="btn btn-warning ml-2">Edit</button>
-        </a>
-        <a href="{% url 'delete_task' obj.id %}">
-          <button type="button" class="btn btn-danger ml-2">Delete</button>
-        </a>
-      </div>
-      {% endfor %}
-		</ul>
-
-		<!-- <button class="add-card-btn btn">Add a card</button> -->
-
 	</div>
 
 	<div class="list">
 
 		<h3 class="list-title">Completed Tasks</h3>
+    <div class="d-flex justify-content-center mb-3">
+      <form method="GET" class="form-inline">
+        <div class="form-group mr-2">
+            <select name="filter_by_completed" id="filterBy" class="form-control">
+                <option value="">No Filter</option>
+                <option value="category">Category</option>
+                <option value="deadline">Deadline</option>
+                <option value="importance">Importance</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+      </form>
+    </div>
 
 		<ul class="list-items">
 			{% for obj in completed_tasks %}
