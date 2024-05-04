@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+<title>Market</title>
+
+<style>
+	.main {
+		padding: 20px;
+	}
+
+	.top-div {
+		height: 200px; 
+		background-image: linear-gradient(93deg, #650aff, #3068ff);
+		border-radius: 10px;
+		color: white;
+		padding: 20px;
+		font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	}
+
+	.my-todo {
+		background-color: white;
+		border-radius: 10px;
+		border: 1px solid #650aff;
+	}
+
+	th, td {
+		padding-right: 20px;
+		padding-left: 20px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+
+	.thead-dark {
+		background-image: linear-gradient(93deg, #650aff, #3068ff);
+		color: white;
+	}
+</style>
+{% endblock title %}
+
+{% block content %}
+    <div class="main">
+        <div>
+            <div class="row p-3 mt-3">
+                {% for item in items %}
+                <div class="col-md-3">
+                    <div class="my-todo d-flex flex-column justify-content-center align-items-left p-3 mb-3">
+                        <h6>{{item.name}}</h6>
+                        <h6>{{item.description}}</h6>
+                        <h6>Cost: {{item.price}}</h6>                        
+                        <br>
+                        <button style="border: 1px solid #650aff;" class="btn"><a style="text-decoration: none;" href="{% url 'buy' item.id %}">Buy</a></button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% if itemid %}
+                <h6>{{message}}</h6>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

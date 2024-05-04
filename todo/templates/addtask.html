@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+{% if task_id %}
+<form style="width: 50%; margin: auto;" method="post" action="{% url 'edit_task' task_id=task_id %}">
+    <h1 class="text-center">Edit Task</h1>
+{% else %}
+<form style="width: 50%; margin: auto;" method="post" action="{% url 'add_task' %}">
+    <h1 class="text-center">Add Task</h1>
+{% endif %}
+    {% csrf_token %}
+    {{ form | crispy }}
+    <input type="submit" value="Save">
+</form>
+
+{% endblock %}
