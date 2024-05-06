@@ -3,11 +3,14 @@ from django.urls import reverse
 from login.models import CustomUser
 from login.managers import CustomUserManager
 from .models import TaskList, Feedback
+from django.contrib.auth.base_user import BaseUserManager
+from django.utils import timezone
+
 
 class ViewTestCase(TestCase):
     def setUp(self):
         # Create a test user
-        self.CustomUser = CustomUserManager.create_user(email='testingAuto@gmail.com',first_name = 'tester', last_name = 'testing', password='password@1234')
+        self.user = CustomUser.objects.create_user(email='testingAuto@gmail.com',first_name = 'tester', last_name = 'testing', password='password@1234')
 
         # Create test tasks
         self.task1 = TaskList.objects.create(task='Task 1', category = 'test1', manage=self.user)
@@ -60,7 +63,7 @@ class ViewTestCase(TestCase):
         self.client.login(email='testingAuto@gmail.com', password='password@1234')
         response = self.client.get(reverse('profile'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['email'], 'testuser@example.com')  # Assuming email is set to example value
+        self.assertEqual(response.context['email'], 'testingAuto@gmail.com')  # Assuming email is set to example value
         self.assertEqual(response.context['total_points'], 0)  # Assuming initial points are 0
 
 
