@@ -1,12 +1,13 @@
 from django.test import TestCase
 from django.urls import reverse
 from login.models import CustomUser
+from login.managers import CustomUserManager
 from .models import TaskList, Feedback
 
 class ViewTestCase(TestCase):
     def setUp(self):
         # Create a test user
-        self.CustomUser = CustomUser.create_user(email='testingAuto@gmail.com',first_name = 'tester', last_name = 'testing', password='password@1234')
+        self.CustomUser = CustomUserManager.create_user(email='testingAuto@gmail.com',first_name = 'tester', last_name = 'testing', password='password@1234')
 
         # Create test tasks
         self.task1 = TaskList.objects.create(task='Task 1', category = 'test1', manage=self.user)
