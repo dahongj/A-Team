@@ -94,11 +94,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ateam',
         'USER': 'root',
-        'PASSWORD': 'ateam123',
-        'HOST':'localhost',
-        'PORT':'3306',
+        'PASSWORD': 'Ashna20003',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
+
 
 
 # Password validation

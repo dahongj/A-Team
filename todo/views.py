@@ -12,12 +12,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from celery import shared_task
 import json
-# from Cocoa import *
-# import objc
-import time
-import psutil
-import sys
-import os
+
 
 @login_required	
 def index(request):
