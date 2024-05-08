@@ -1,0 +1,166 @@
+### Test Cases for A team
+
+1. Create Task:
+   - Description: Verify that a user can create a task with all necessary details (name, description, deadline).
+   - Steps: Log in, navigate to task creation, enter task details, save.
+   - Expected Result: Task is created and visible in the task list.
+
+2. Edit Task:
+   - Description: Verify that a user can edit an existing task.
+   - Steps: Select an existing task, modify details, save changes.
+   - Expected Result: Task details are updated correctly.
+
+3. Delete Task:
+   - Description: Ensure that a user can delete a task.
+   - Steps: Select a task, delete it.
+   - Expected Result: Task is no longer in the system.
+
+4. Complete Task:
+   - Description: Verify that completing a task updates its status and awards points.
+   - Steps: Mark a task as complete.
+   - Expected Result: Task status updated, points awarded.
+
+5. Assign Task:
+   - Description: Verify that a task can be assigned to a specific user.
+   - Steps: Create a task, assign to user, save.
+   - Expected Result: User receives task assignment.
+
+6. Reassign Task:
+   - Description: Check reassignment functionality.
+   - Steps: Select assigned task, reassign to another user.
+   - Expected Result: New user is now assigned to the task.
+
+7. Task Prioritization:
+   - Description: Verify that tasks can be prioritized.
+   - Steps: Create multiple tasks, set different priorities.
+   - Expected Result: Tasks are sorted by priority.
+
+8. Task Search Functionality:
+   - Description: Ensure the task search functionality works.
+   - Steps: Search for a specific task by name.
+   - Expected Result: Relevant tasks are displayed.
+
+9. Task Notification:
+   - Description: Verify that notifications are sent for upcoming deadlines.
+   - Steps: Set a task with a close deadline, wait for notification.
+   - Expected Result: Notification is received.
+
+10. Task Scheduling with Repeats:
+    - Description: Verify scheduling of repeated tasks.
+    - Steps: Create a task, set to repeat daily, save.
+    - Expected Result: Task repeats as scheduled.
+
+### Test Cases for Point Scheduler
+
+11. Point Allocation on Task Completion:
+    - Description: Verify points are correctly allocated after task completion.
+    - Steps: Complete a task, check points balance.
+    - Expected Result: Points balance is updated.
+
+12. Purchase with Points:
+    - Description: Check if users can use points to purchase GUI customization.
+    - Steps: Accumulate points, choose customization, purchase.
+    - Expected Result: GUI updates, points deducted.
+
+13. Points Deduction on Refund:
+    - Description: Verify points are refunded correctly after a cancellation.
+    - Steps: Purchase an item, cancel the purchase.
+    - Expected Result: Points are refunded.
+
+14. Transfer Points Between Users:
+    - Description: Ensure users can transfer points to each other.
+    - Steps: Transfer points from one user to another.
+    - Expected Result: Both users' points balances update correctly.
+
+15. View Points History:
+    - Description: Verify that users can view their points transaction history.
+    - Steps: Navigate to points history page.
+    - Expected Result: All past transactions are listed.
+
+### Interface and Integration Test Cases
+
+16. User Login:
+    - Description: Verify that users can log in with valid credentials.
+    - Steps: Enter username and password, submit.
+    - Expected Result: User is logged in to the dashboard.
+
+17. User Logout:
+    - Description: Ensure users can log out.
+    - Steps: Click logout.
+    - Expected Result: User is logged out.
+
+18. Password Reset:
+    - Description: Check password reset functionality.
+    - Steps: Request password reset, follow process.
+    - Expected Result: Password is reset, and user can log in with new password.
+
+19. Database Integration:
+    - Description: Verify that the application correctly interacts with the database.
+    - Steps: Perform any database-related operation.
+    - Expected Result: Operation completes without errors.
+
+20. Integration with Project Management Tools:
+    - Description: Check integration with external project management tools.
+    - Steps: Sync tasks with an external tool.
+    - Expected Result: Tasks are synced correctly.
+
+### Load and Performance Test Cases
+
+21. Concurrent Task Creation:
+    - Description: Test system performance under load by creating multiple tasks simultaneously.
+    - Steps: Multiple users create tasks at the same time.
+    - Expected Result: System handles load without performance degradation.
+
+22. Stress Test on Point Allocation System:
+    - Description: Verify system performance under heavy use of the point allocation system.
+    - Steps: Simulate multiple users earning points simultaneously.
+    - Expected Result: Points system updates without delay or error.
+
+### Security Test Cases
+
+23. SQL Injection:
+    - Description: Ensure the system is secure against SQL injection attacks.
+    - Steps: Try to inject SQL via input fields.
+    - Expected Result: Injection attempt fails, system remains secure.
+
+24. Cross-Site Scripting (XSS):
+    - Description: Verify that the system is secure against XSS attacks.
+    - Steps: Attempt to inject JavaScript via input fields.
+    - Expected Result: Script does not execute.
+
+### Usability and Accessibility Test Cases
+
+25. Accessibility Compliance:
+    - Description: Ensure the application meets accessibility standards.
+    - Steps: Check compliance with WCAG guidelines.
+    - Expected Result: Application is accessible according to standards.
+
+26. User Interface Responsiveness:
+    - Description: Verify that the application UI is responsive on different devices.
+    - Steps: Access the application on various devices.
+    - Expected Result: UI adjusts correctly to different screen sizes.
+
+### Miscellaneous Test Cases
+
+27. Language Localization:
+    - Description: Check if the application correctly supports multiple languages.
+    - Steps: Change language settings, navigate through app.
+    - Expected Result: Application displays in chosen language.
+
+28. Help and Support Accessibility:
+    - Description: Ensure that help and support features are easily accessible.
+    - Steps: Navigate to help section, access support.
+    - Expected Result: Help and support are accessible and informative.
+
+29. Data Backup and Recovery:
+    - Description: Verify that data backup and recovery processes work correctly.
+    - Steps: Simulate data loss, attempt recovery.
+    - Expected Result: Data is restored accurately.
+
+30. Email Integration:
+    - Description: Check the integration with email for notifications.
+    - Steps: Perform an action that triggers an email notification.
+    - Expected Result: Email is sent and contains correct information.
+
+
+
